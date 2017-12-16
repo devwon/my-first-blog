@@ -4,9 +4,17 @@
         <title>1hyerin's blog</title>
     </head>
     <body>
-        <h2>혜린이의 블로그입니다.</h2>
-        <p>이거 작동하나요?</p>
-        <a href="wwww.naver.com">네이버 사이트로 이동하기</a>
+    <div>
+        <h2>혜린이의 블로그입니다.</h2>  
+    </div>
+        {% for post in posts %}
+        <div>
+            <p>published: {{post.published_date}}</p>
+            <h1><a href=/>{{post.title}</a></h1>
+            <p>{{post.text|linebreaksbr}}</p>
+        </div>
+    {% endfor %}
+    
     </body>
     
 </html>
