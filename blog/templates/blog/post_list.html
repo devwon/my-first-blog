@@ -7,11 +7,12 @@
     <div>
         <h2>혜린이의 블로그입니다.</h2>  
     </div>
-        {% for post in posts %}
+
+    {% for post in posts %}
         <div>
-            <p>published: {{post.published_date}}</p>
-            <h1><a href=/>{{post.title}</a></h1>
-            <p>{{post.text|linebreaksbr}}</p>
+            <p>published: {{ post.published_date }}</p>
+            <h1><a href=/>{{ post.title }}</a></h1>
+            <p>{{ post.text|linebreaksbr }}</p>
         </div>
     {% endfor %}
     
