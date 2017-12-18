@@ -10,8 +10,14 @@
         
     </head>
     <body>
-         <div class="page-header">
-                <h1><a href="/">Hyerin's Blog</a></h1>
+        <!--보안을 위한 코드-->
+        <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>            
+        
+        <div class="page-header">
+            {% if user.is_authenticated %}
+            <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+            {% endif %}    
+            <h1><a href="/">Hyerin's Blog</a></h1>
         </div>
         <div class="content container">
             <div class="row">
