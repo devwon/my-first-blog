@@ -1,21 +1,13 @@
-<html>
-    <head>
+{% extends 'blog/base.html' %}
 
-        <title>1hyerin's blog</title>
-    </head>
-    <body>
-    <div>
-        <h2>혜린이의 블로그입니다.</h2>  
-    </div>
-
+{% block content %}
     {% for post in posts %}
-        <div>
+        <div class="post">
+            <div class="date">
             <p>published: {{ post.published_date }}</p>
-            <h1><a href=/>{{ post.title }}</a></h1>
-            <p>{{ post.text|linebreaksbr }}</p>
-        </div>
+        </div>    
+        <h1><a href="{%url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+        <p>{{ post.text|linebreaksbr }}</p>
+    </div>
     {% endfor %}
-    
-    </body>
-    
-</html>
+{% endblock %}
