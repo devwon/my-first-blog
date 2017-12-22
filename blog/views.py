@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .forms import PostForm
+from .models import Post #"Post is not defined" error
 
 def post_list(request):
     #posts는 쿼리셋의 변수이름
