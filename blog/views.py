@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .forms import PostForm
-from .models import Post #"Post is not defined" error
+from .models import Post #"Post is not defined" error fixed
+from django.contrib.auth.decorators import login_required #for secure my website
+
 
 def post_list(request):
     #posts는 쿼리셋의 변수이름
@@ -12,19 +14,21 @@ def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
 
+@login_required
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.published_date = timezone.now()
+            #post.published_date = timezone.now()
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
 
+@login_required
 def post_edit(request, pk):#url로 부터 추가로 pk 매개변수를 받아서 처리
     post = get_object_or_404(Post, pk=pk)#수정하고자 하는 글의 Post 모델 instance를 가져옴
     if request.method == "POST":
@@ -32,9 +36,34 @@ def post_edit(request, pk):#url로 부터 추가로 pk 매개변수를 받아서
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.published_date = timezone.now()
+            #post.published_date = timezone.now()
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
+#for draft
+@login_required
+def post_draft_list(request):
+    posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
+    return render(request, 'blog/post_draft_list.html', {'posts': posts})
+
+#for publish
+@login_required
+def post_publish(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.publish()
+    return redirect('post_detail', pk=pk)
+
+
+def publish(self):
+    self.published_date = timezone.now()
+    self.save()
+
+#for remove    
+@login_required
+def post_remove(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.delete()
+    return redirect('post_list')

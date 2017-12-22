@@ -6,10 +6,16 @@
             <div class="date">
                 {{ post.published_date }}
             </div>
+        {% else %}
+            <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
         {% endif %}
-        <!--관리자의 게시물 수정을 위한 코드-->
+        <!--보안을 위한 코드-->
         {% if user.is_authenticated %}
+            <!--게시물 수정을 위한 코드-->
             <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+            <!--게시물 삭제-->
+            <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+            
         {% endif %}
         <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaksbr }}</p>
