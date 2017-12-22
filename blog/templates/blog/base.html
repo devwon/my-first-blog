@@ -15,6 +15,7 @@
         -->
         <div class="page-header">
             {% if user.is_authenticated %}
+            <!--보안을 위한 코드-->
             <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
             {% endif %}    
             <h1><a href="/">Hyerin's Blog</a></h1>
