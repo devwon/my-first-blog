@@ -8,7 +8,8 @@
         </div>    
         <h1><a href="{%url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
         <p>{{ post.text|linebreaksbr }}</p>
-        <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
+        <!--모든 댓글의 수가 보여짐(관리자 승인 불필요)-->
+        <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.comments.count }}</a>
     </div>
     {% endfor %}
 {% endblock %}
