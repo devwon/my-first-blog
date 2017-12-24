@@ -32,7 +32,7 @@ def post_new(request):
 def post_edit(request, pk):#url로 부터 추가로 pk 매개변수를 받아서 처리
     post = get_object_or_404(Post, pk=pk)#수정하고자 하는 글의 Post 모델 instance를 가져옴
     if request.method == "POST":
-        form = PostForm(instance=post)
+        form = PostForm(request.POST, instance=post)#request.POST를 뺐더니 수정이 안된다!
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
